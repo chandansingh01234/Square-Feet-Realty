@@ -1,5 +1,5 @@
 import React from 'react'
-import { ShieldCheck, Compass, Users2, Eye, MapPin, CheckCircle2 } from 'lucide-react'
+import { Compass, Eye, MapPin } from 'lucide-react'
 import { COMPANY_INFO } from '../data/companyInfo'
 
 export default function AboutSection() {

@@ -13,9 +13,9 @@
 - **English Tagline:** *Right Property. Right Guidance. Right Connection.*
 - **Core Pillars:** *Sale | Purchase | Rent*
 - **Official Website:** [www.squarefeetrealty.co.in](https://www.squarefeetrealty.co.in)
-- **Primary Contact Email:** `chandan01234singh@gmail.com`
-- **Admin Email:** `chandan01234singh@gmail.com`
-- **Phone / WhatsApp:** `+91 62846 56983` (+91 6284656983)
+- **Primary Contact Email:** `squarefeetrealty@gmail.com`
+- **Admin Email:** `squarefeetrealty@gmail.com`
+- **Phone / WhatsApp:** `+91 70044 99031` (+91 7004499031)
 - **Key Focus Areas:** Chandigarh, Mohali (SAS Nagar), Zirakpur (VIP Road & PR-7), Panchkula, New Chandigarh (Mullanpur), and the greater Tricity region.
 
 ---
@@ -71,7 +71,7 @@
 
 8. **Contact & Service Areas:**
    - Clickable `tel:` and `mailto:` links.
-   - Direct WhatsApp connect button to `+91 6284656983`.
+   - Direct WhatsApp connect button to `+91 7004499031`.
    - Tricity regional coverage overview.
 
 9. **Footer:**
@@ -128,7 +128,7 @@ The production-ready assets will be generated in the `dist/` directory.
 
 The website includes a configurable form backend submission adapter in [`src/utils/emailService.js`](file:///d:/Web/src/utils/emailService.js).
 
-To connect automated email forwarding to `chandan01234singh@gmail.com`:
+To connect automated email forwarding to `squarefeetrealty@gmail.com`:
 
 1. Copy `.env.example` to `.env`:
    ```bash
@@ -138,7 +138,7 @@ To connect automated email forwarding to `chandan01234singh@gmail.com`:
 2. Configure your form backend service:
    - **Option 1: Formspree (Recommended)**
      - Create a free form at [formspree.io](https://formspree.io)
-     - Set the recipient email to `chandan01234singh@gmail.com`
+     - Set the recipient email to `squarefeetrealty@gmail.com`
      - Add to `.env`:
        ```env
        VITE_FORM_ENDPOINT=https://formspree.io/f/YOUR_FORM_ID
@@ -153,7 +153,7 @@ To connect automated email forwarding to `chandan01234singh@gmail.com`:
      - Set `VITE_FORM_ENDPOINT=https://your-domain.com/api/enquiries`
 
 3. **Built-in WhatsApp Zero-Loss Guarantee:**  
-   Even if an email endpoint is not yet configured, the website automatically provides users with a direct, formatted **"Send via WhatsApp (+91 6284656983)"** button that pre-fills all form fields into WhatsApp so no lead is ever lost.
+   Even if an email endpoint is not yet configured, the website automatically provides users with a direct, formatted **"Send via WhatsApp (+91 70044 99031)"** button that pre-fills all form fields into WhatsApp so no lead is ever lost.
 
 ---
 

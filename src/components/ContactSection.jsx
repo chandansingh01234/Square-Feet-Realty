@@ -2,14 +2,11 @@ import React from 'react'
 import { 
   Mail, 
   Phone, 
-  MessageSquare, 
   Globe, 
   MapPin, 
-  Clock, 
-  ShieldCheck, 
-  ArrowRight,
-  Sparkles
+  ArrowRight
 } from 'lucide-react'
+import WhatsAppIcon from './WhatsAppIcon'
 import { COMPANY_INFO } from '../data/companyInfo'
 
 export default function ContactSection({ onNavigate }) {
@@ -39,7 +36,7 @@ export default function ContactSection({ onNavigate }) {
             Let's Find the Right Property for You
           </h2>
           <p className="mt-3 text-base sm:text-lg text-slate-300">
-            {COMPANY_INFO.taglineHindi} — Your trusted advisory team across Chandigarh, Mohali, Zirakpur and the Tricity region.
+            {COMPANY_INFO.taglineEnglish} — Your trusted advisory team across Chandigarh, Mohali, Zirakpur and the Tricity region.
           </p>
         </div>
 
@@ -78,7 +75,7 @@ export default function ContactSection({ onNavigate }) {
           >
             <div>
               <div className="w-12 h-12 rounded-xl bg-[#25D366]/20 border border-[#25D366]/40 flex items-center justify-center text-[#25D366] mb-4 group-hover:scale-110 transition-transform">
-                <MessageSquare className="w-5 h-5 fill-current" />
+                <WhatsAppIcon className="w-6 h-6 text-[#25D366]" />
               </div>
               <p className="text-xs font-semibold text-emerald-400 uppercase tracking-wider">WhatsApp Connect</p>
               <h3 className="text-lg font-bold text-white mt-1 group-hover:text-emerald-300 transition-colors">

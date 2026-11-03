@@ -18,7 +18,7 @@ export function isValidIndianPhone(phone) {
 export function generateBuyWhatsAppUrl(formData) {
   const lines = [
     `*SQUARE FEET REALTY - PROPERTY BUY ENQUIRY*`,
-    `_Kar Lo Chaabi Mutthi Mein.._`,
+    `_${COMPANY_INFO.taglineEnglish}_`,
     ``,
     `👤 *Client Name:* ${formData.fullName || 'Not specified'}`,
     `📞 *Primary Contact:* ${formData.primaryPhone || 'Not specified'}`,
@@ -58,7 +58,7 @@ export function generateBuyWhatsAppUrl(formData) {
 export function generateSellWhatsAppUrl(formData) {
   const lines = [
     `*SQUARE FEET REALTY - PROPERTY LISTING / SELL SUBMISSION*`,
-    `_Kar Lo Chaabi Mutthi Mein.._`,
+    `_${COMPANY_INFO.taglineEnglish}_`,
     ``,
     `👤 *Owner Name:* ${formData.fullName || 'Not specified'}`,
     `📞 *Primary Contact:* ${formData.primaryPhone || 'Not specified'}`,

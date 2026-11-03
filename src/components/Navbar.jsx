@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { KeyRound, Menu, X, Phone, MessageSquare, ChevronRight, Home, Building2, ShieldCheck } from 'lucide-react'
+import { KeyRound, Menu, X, Phone, ChevronRight } from 'lucide-react'
 import { COMPANY_INFO } from '../data/companyInfo'
 
 export default function Navbar({ activeSection, onNavigate }) {
@@ -64,7 +64,7 @@ export default function Navbar({ activeSection, onNavigate }) {
               </div>
               <div className="flex items-center gap-1.5">
                 <span className="text-[11px] sm:text-xs font-semibold text-[#8B6E16] bg-[#FDF8E8] px-2 py-0.5 rounded-full border border-[#D4AF37]/30 tracking-wide">
-                  {COMPANY_INFO.taglineHindi}
+                  {COMPANY_INFO.taglinePill}
                 </span>
               </div>
             </div>
@@ -137,7 +137,7 @@ export default function Navbar({ activeSection, onNavigate }) {
         <div className="lg:hidden bg-white border-b border-slate-200 shadow-xl px-4 pt-3 pb-6 animate-fadeIn">
           <div className="p-3 bg-amber-50/70 border border-amber-200/70 rounded-xl mb-4 text-center">
             <p className="text-xs font-semibold text-[#8B6E16] uppercase tracking-wider">Tricity Property Partner</p>
-            <p className="text-sm font-bold text-[#0A192F] mt-0.5">{COMPANY_INFO.taglineHindi}</p>
+            <p className="text-sm font-bold text-[#0A192F] mt-0.5">{COMPANY_INFO.taglinePill}</p>
             <p className="text-xs text-slate-500 mt-0.5">{COMPANY_INFO.taglineEnglish}</p>
           </div>
 

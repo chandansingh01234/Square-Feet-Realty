@@ -2,19 +2,13 @@ import React, { useState } from 'react'
 import { 
   Building2, 
   Home, 
-  Check, 
   AlertCircle, 
   Send, 
-  Phone, 
-  MessageSquare, 
   CheckCircle2, 
   ShieldCheck, 
-  Sparkles,
-  MapPin,
-  IndianRupee,
-  Layers,
   Mail
 } from 'lucide-react'
+import WhatsAppIcon from './WhatsAppIcon'
 import { COMPANY_INFO } from '../data/companyInfo'
 import { 
   isValidIndianPhone, 
@@ -53,12 +47,11 @@ export default function BuyPropertyForm({ initialPropertyType = 'Residential' })
     requiresWhatsAppNotice: false
   })
 
-  // Update property type if changed from outside
-  React.useEffect(() => {
-    if (initialPropertyType) {
-      setFormData(prev => ({ ...prev, propertyType: initialPropertyType }))
-    }
-  }, [initialPropertyType])
+  const [prevInitialType, setPrevInitialType] = useState(initialPropertyType)
+  if (initialPropertyType !== prevInitialType) {
+    setPrevInitialType(initialPropertyType)
+    setFormData(prev => ({ ...prev, propertyType: initialPropertyType }))
+  }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -167,6 +160,14 @@ export default function BuyPropertyForm({ initialPropertyType = 'Residential' })
         message: result.message || 'Thank You for Sharing Your Requirement!',
         requiresWhatsAppNotice: !result.success
       })
+
+      // Smoothly bring the Thank You confirmation div into view instead of scrolling down
+      setTimeout(() => {
+        const thankyouEl = document.getElementById('buy-thankyou') || document.getElementById('buy-form-top')
+        if (thankyouEl) {
+          thankyouEl.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        }
+      }, 50)
     } catch (err) {
       console.error(err)
       setSubmissionState({
@@ -175,6 +176,13 @@ export default function BuyPropertyForm({ initialPropertyType = 'Residential' })
         message: 'Could not submit form. Please use WhatsApp for instant assistance.',
         requiresWhatsAppNotice: true
       })
+
+      setTimeout(() => {
+        const thankyouEl = document.getElementById('buy-thankyou') || document.getElementById('buy-form-top')
+        if (thankyouEl) {
+          thankyouEl.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        }
+      }, 50)
     } finally {
       setIsSubmitting(false)
     }
@@ -238,7 +246,7 @@ export default function BuyPropertyForm({ initialPropertyType = 'Residential' })
           <div className="bg-gradient-to-r from-[#0A192F] via-[#112240] to-[#0A192F] px-6 sm:px-10 py-5 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[#D4AF37]/30">
             <div>
               <p className="text-xs font-semibold text-[#F3DF8A] tracking-wider uppercase">
-                {COMPANY_INFO.taglineHindi}
+                {COMPANY_INFO.taglineEnglish}
               </p>
               <h3 className="text-lg sm:text-xl font-bold text-white mt-0.5">
                 Tell Us What You Are Looking For
@@ -252,7 +260,7 @@ export default function BuyPropertyForm({ initialPropertyType = 'Residential' })
 
           {/* Submission Success State */}
           {submissionState.submitted ? (
-            <div className="p-8 sm:p-12 text-center space-y-6 animate-fadeIn">
+            <div id="buy-thankyou" className="p-8 sm:p-12 text-center space-y-6 animate-fadeIn min-h-[460px] flex flex-col justify-center">
               <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto text-[#8B6E16] shadow-inner">
                 <CheckCircle2 className="w-10 h-10 text-[#C59B27]" />
               </div>
@@ -292,7 +300,7 @@ export default function BuyPropertyForm({ initialPropertyType = 'Residential' })
               <div className="pt-6 border-t border-slate-100 max-w-lg mx-auto space-y-4">
                 <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl text-left">
                   <p className="text-xs font-bold text-emerald-800 uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                    <MessageSquare className="w-4 h-4 text-emerald-600" />
+                    <WhatsAppIcon className="w-4 h-4 text-emerald-600" />
                     Instant WhatsApp Connection
                   </p>
                   <p className="text-xs text-emerald-900 leading-relaxed">
@@ -305,15 +313,15 @@ export default function BuyPropertyForm({ initialPropertyType = 'Residential' })
                     href={whatsAppUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 transition-all"
+                    className="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 transition-all cursor-pointer"
                   >
-                    <MessageSquare className="w-4 h-4 fill-white" />
+                    <WhatsAppIcon className="w-4 h-4 text-white" />
                     <span>Open in WhatsApp</span>
                   </a>
 
                   <button
                     onClick={handleReset}
-                    className="w-full sm:w-auto px-6 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-sm transition-colors border border-slate-300"
+                    className="w-full sm:w-auto px-6 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-sm transition-colors border border-slate-300 cursor-pointer"
                   >
                     Submit Another Requirement
                   </button>
@@ -429,7 +437,7 @@ export default function BuyPropertyForm({ initialPropertyType = 'Residential' })
                       <button
                         type="button"
                         onClick={() => setFormData(prev => ({ ...prev, propertyType: 'Residential' }))}
-                        className={`p-3.5 rounded-xl border-2 flex items-center justify-center gap-2.5 font-bold text-sm transition-all ${
+                        className={`p-3.5 rounded-xl border-2 flex items-center justify-center gap-2.5 font-bold text-sm transition-all cursor-pointer ${
                           formData.propertyType === 'Residential'
                             ? 'border-[#0A192F] bg-[#0A192F] text-white shadow-md'
                             : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'
@@ -442,7 +450,7 @@ export default function BuyPropertyForm({ initialPropertyType = 'Residential' })
                       <button
                         type="button"
                         onClick={() => setFormData(prev => ({ ...prev, propertyType: 'Commercial' }))}
-                        className={`p-3.5 rounded-xl border-2 flex items-center justify-center gap-2.5 font-bold text-sm transition-all ${
+                        className={`p-3.5 rounded-xl border-2 flex items-center justify-center gap-2.5 font-bold text-sm transition-all cursor-pointer ${
                           formData.propertyType === 'Commercial'
                             ? 'border-[#0A192F] bg-[#0A192F] text-white shadow-md'
                             : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'
@@ -482,7 +490,7 @@ export default function BuyPropertyForm({ initialPropertyType = 'Residential' })
                             type="button"
                             key={loc}
                             onClick={() => toggleLocation(loc)}
-                            className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
+                            className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer ${
                               isSelected
                                 ? 'bg-[#0A192F] text-[#F3DF8A] border-[#0A192F] shadow-xs'
                                 : 'bg-slate-50 text-slate-700 border-slate-200 hover:border-slate-300'
@@ -524,7 +532,7 @@ export default function BuyPropertyForm({ initialPropertyType = 'Residential' })
                             type="button"
                             key={item}
                             onClick={() => toggleBHK(item)}
-                            className={`py-2.5 px-3 rounded-xl border-2 text-center text-xs sm:text-sm font-bold transition-all ${
+                            className={`py-2.5 px-3 rounded-xl border-2 text-center text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                               isSelected
                                 ? 'border-[#C59B27] bg-[#FDF8E8] text-[#8B6E16] shadow-xs'
                                 : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'
@@ -556,7 +564,7 @@ export default function BuyPropertyForm({ initialPropertyType = 'Residential' })
                             type="button"
                             key={status}
                             onClick={() => setFormData(prev => ({ ...prev, propertyStatus: status }))}
-                            className={`p-3 rounded-xl border text-xs sm:text-sm font-semibold text-left transition-all ${
+                            className={`p-3 rounded-xl border text-xs sm:text-sm font-semibold text-left transition-all cursor-pointer ${
                               isSelected
                                 ? 'border-[#0A192F] bg-slate-100 text-[#0A192F] font-bold shadow-xs'
                                 : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
@@ -652,7 +660,7 @@ export default function BuyPropertyForm({ initialPropertyType = 'Residential' })
                             type="button"
                             key={loc}
                             onClick={() => toggleLocation(loc)}
-                            className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
+                            className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer ${
                               isSelected
                                 ? 'bg-[#0A192F] text-[#F3DF8A] border-[#0A192F] shadow-xs'
                                 : 'bg-slate-50 text-slate-700 border-slate-200 hover:border-slate-300'
@@ -777,11 +785,11 @@ export default function BuyPropertyForm({ initialPropertyType = 'Residential' })
                     href={whatsAppUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="py-3.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-xs flex items-center justify-center gap-2 transition-colors"
+                    className="py-3.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-xs flex items-center justify-center gap-2 transition-colors cursor-pointer"
                     title="Send directly via WhatsApp"
                   >
-                    <MessageSquare className="w-4 h-4" />
-                    <span>Send via WhatsApp (+91 6284656983)</span>
+                    <WhatsAppIcon className="w-4 h-4 text-white" />
+                    <span>Send via WhatsApp ({COMPANY_INFO.phoneDisplay})</span>
                   </a>
                 </div>
 

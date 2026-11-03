@@ -1,5 +1,6 @@
 import React from 'react'
-import { KeyRound, Mail, Phone, Globe, MessageSquare, MapPin, ArrowUp } from 'lucide-react'
+import { KeyRound, Mail, Phone, Globe, MapPin, ArrowUp } from 'lucide-react'
+import WhatsAppIcon from './WhatsAppIcon'
 import { COMPANY_INFO } from '../data/companyInfo'
 
 export default function Footer({ onNavigate }) {
@@ -125,7 +126,7 @@ export default function Footer({ onNavigate }) {
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
-                <MessageSquare className="w-4 h-4 text-emerald-400 shrink-0" />
+                <WhatsAppIcon className="w-4 h-4 text-emerald-400 shrink-0" />
                 <a
                   href={`https://wa.me/${COMPANY_INFO.whatsappNumber}`}
                   target="_blank"

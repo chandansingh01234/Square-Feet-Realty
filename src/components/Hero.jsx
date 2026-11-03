@@ -22,15 +22,15 @@ export default function Hero({ onNavigate }) {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-24 lg:pt-32 pb-20 sm:pb-28">
         <div className="max-w-3xl">
           
-          {/* Hindi Tagline Pill & Brand Highlight */}
+          {/* Tagline Pill & Brand Highlight */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-[#D4AF37]/50 shadow-inner mb-6 animate-fadeIn">
             <span className="flex h-2 w-2 rounded-full bg-[#D4AF37] animate-pulse"></span>
             <span className="text-xs sm:text-sm font-semibold tracking-wide text-[#F3DF8A]">
-              {COMPANY_INFO.taglineHindi}
+              {COMPANY_INFO.taglinePill}
             </span>
             <span className="text-white/40 text-xs">•</span>
             <span className="text-white/80 text-xs hidden sm:inline-block">
-              {COMPANY_INFO.taglinePill}
+              Chandigarh • Mohali • Zirakpur
             </span>
           </div>
 

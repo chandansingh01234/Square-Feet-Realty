@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Phone, MessageSquare, MapPin } from 'lucide-react'
+import { Phone } from 'lucide-react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import AboutSection from './components/AboutSection'
@@ -10,6 +10,7 @@ import SellPropertyForm from './components/SellPropertyForm'
 import ContactSection from './components/ContactSection'
 import Footer from './components/Footer'
 import WhatsAppFloatingCTA from './components/WhatsAppFloatingCTA'
+import WhatsAppIcon from './components/WhatsAppIcon'
 import { COMPANY_INFO } from './data/companyInfo'
 
 export default function App() {
@@ -55,11 +56,7 @@ export default function App() {
               Square Feet Realty
             </span>
             <span className="text-white/30">•</span>
-            <span className="text-slate-200">
-              "{COMPANY_INFO.taglineHindi}"
-            </span>
-            <span className="text-white/30">•</span>
-            <span className="text-slate-400">
+            <span className="text-slate-300">
               {COMPANY_INFO.taglineEnglish}
             </span>
           </div>
@@ -79,7 +76,7 @@ export default function App() {
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 text-emerald-400 hover:text-emerald-300 transition-colors"
             >
-              <MessageSquare className="w-3.5 h-3.5 fill-current" />
+              <WhatsAppIcon className="w-3.5 h-3.5" />
               <span>WhatsApp Us</span>
             </a>
           </div>

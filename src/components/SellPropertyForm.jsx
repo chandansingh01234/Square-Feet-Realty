@@ -3,16 +3,12 @@ import {
   Building2, 
   Home, 
   AlertCircle, 
-  Send, 
   KeyRound, 
   CheckCircle2, 
   ShieldCheck, 
-  MessageSquare,
-  MapPin,
-  Maximize2,
-  BadgeIndianRupee,
   Mail
 } from 'lucide-react'
+import WhatsAppIcon from './WhatsAppIcon'
 import { COMPANY_INFO } from '../data/companyInfo'
 import { 
   isValidIndianPhone, 
@@ -28,7 +24,7 @@ export default function SellPropertyForm() {
     primaryPhone: '',
     alternatePhone: '',
     propertyType: 'Residential',
-    bhk: '3 BHK',
+    bhk: '', // 3 BHK is NOT selected by default
     propertyStatus: 'Ready to Move - New',
     propertyAddress: '',
     areaSqFt: '',
@@ -76,6 +72,10 @@ export default function SellPropertyForm() {
     }
 
     // Property details
+    if (formData.propertyType === 'Residential' && !formData.bhk) {
+      newErrors.bhk = 'Please select a BHK configuration.'
+    }
+
     if (!formData.propertyAddress.trim()) {
       newErrors.propertyAddress = 'Complete Property Address is required.'
     }
@@ -118,6 +118,15 @@ export default function SellPropertyForm() {
         message: result.message || 'Thank You for Sharing Your Requirement!',
         requiresWhatsAppNotice: !result.success
       })
+
+      // Smoothly bring the Thank You confirmation div directly into view
+      // instead of leaving the page scrolled down past the form
+      setTimeout(() => {
+        const thankyouEl = document.getElementById('sell-thankyou') || document.getElementById('sell-form-top')
+        if (thankyouEl) {
+          thankyouEl.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        }
+      }, 50)
     } catch (err) {
       console.error(err)
       setSubmissionState({
@@ -126,6 +135,13 @@ export default function SellPropertyForm() {
         message: 'Could not submit property details. Please use WhatsApp for instant connection.',
         requiresWhatsAppNotice: true
       })
+
+      setTimeout(() => {
+        const thankyouEl = document.getElementById('sell-thankyou') || document.getElementById('sell-form-top')
+        if (thankyouEl) {
+          thankyouEl.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        }
+      }, 50)
     } finally {
       setIsSubmitting(false)
     }
@@ -137,7 +153,7 @@ export default function SellPropertyForm() {
       primaryPhone: '',
       alternatePhone: '',
       propertyType: 'Residential',
-      bhk: '3 BHK',
+      bhk: '', // Reset with no BHK selected
       propertyStatus: 'Ready to Move - New',
       propertyAddress: '',
       areaSqFt: '',
@@ -182,13 +198,13 @@ export default function SellPropertyForm() {
         </div>
 
         {/* Card Container */}
-        <div className="bg-[#FAF8F5] rounded-3xl border border-slate-200/90 shadow-xl overflow-hidden">
+        <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xl overflow-hidden">
           
           {/* Top Brand Banner */}
           <div className="bg-gradient-to-r from-[#0A192F] via-[#112240] to-[#0A192F] px-6 sm:px-10 py-5 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[#D4AF37]/30">
             <div>
               <p className="text-xs font-semibold text-[#F3DF8A] tracking-wider uppercase">
-                {COMPANY_INFO.taglineHindi}
+                {COMPANY_INFO.taglineEnglish}
               </p>
               <h3 className="text-lg sm:text-xl font-bold text-white mt-0.5 flex items-center gap-2">
                 <KeyRound className="w-5 h-5 text-[#D4AF37]" />
@@ -203,7 +219,7 @@ export default function SellPropertyForm() {
 
           {/* Submission Success State */}
           {submissionState.submitted ? (
-            <div className="p-8 sm:p-12 text-center space-y-6 bg-white animate-fadeIn">
+            <div id="sell-thankyou" className="p-8 sm:p-12 text-center space-y-6 bg-white animate-fadeIn min-h-[460px] flex flex-col justify-center">
               <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto text-[#8B6E16] shadow-inner">
                 <CheckCircle2 className="w-10 h-10 text-[#C59B27]" />
               </div>
@@ -243,7 +259,7 @@ export default function SellPropertyForm() {
               <div className="pt-6 border-t border-slate-100 max-w-lg mx-auto space-y-4">
                 <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl text-left">
                   <p className="text-xs font-bold text-emerald-800 uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                    <MessageSquare className="w-4 h-4 text-emerald-600" />
+                    <WhatsAppIcon className="w-4 h-4 text-emerald-600" />
                     Share Listing Directly via WhatsApp
                   </p>
                   <p className="text-xs text-emerald-900 leading-relaxed">
@@ -256,15 +272,15 @@ export default function SellPropertyForm() {
                     href={whatsAppUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 transition-all"
+                    className="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 transition-all cursor-pointer"
                   >
-                    <MessageSquare className="w-4 h-4 fill-white" />
-                    <span>Send via WhatsApp (+91 6284656983)</span>
+                    <WhatsAppIcon className="w-4 h-4 text-white" />
+                    <span>Send via WhatsApp ({COMPANY_INFO.phoneDisplay})</span>
                   </a>
 
                   <button
                     onClick={handleReset}
-                    className="w-full sm:w-auto px-6 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-sm transition-colors border border-slate-300"
+                    className="w-full sm:w-auto px-6 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-sm transition-colors border border-slate-300 cursor-pointer"
                   >
                     Submit Another Property
                   </button>
@@ -384,7 +400,7 @@ export default function SellPropertyForm() {
                       <button
                         type="button"
                         onClick={() => setFormData(prev => ({ ...prev, propertyType: 'Residential' }))}
-                        className={`p-3 rounded-xl border-2 flex items-center justify-center gap-2 font-bold text-sm transition-all ${
+                        className={`p-3 rounded-xl border-2 flex items-center justify-center gap-2 font-bold text-sm transition-all cursor-pointer ${
                           formData.propertyType === 'Residential'
                             ? 'border-[#0A192F] bg-[#0A192F] text-white shadow-xs'
                             : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'
@@ -396,8 +412,8 @@ export default function SellPropertyForm() {
 
                       <button
                         type="button"
-                        onClick={() => setFormData(prev => ({ ...prev, propertyType: 'Commercial' }))}
-                        className={`p-3 rounded-xl border-2 flex items-center justify-center gap-2 font-bold text-sm transition-all ${
+                        onClick={() => setFormData(prev => ({ ...prev, propertyType: 'Commercial', bhk: '' }))}
+                        className={`p-3 rounded-xl border-2 flex items-center justify-center gap-2 font-bold text-sm transition-all cursor-pointer ${
                           formData.propertyType === 'Commercial'
                             ? 'border-[#0A192F] bg-[#0A192F] text-white shadow-xs'
                             : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'
@@ -409,7 +425,7 @@ export default function SellPropertyForm() {
                     </div>
                   </div>
 
-                  {/* For Residential: BHK */}
+                  {/* For Residential: BHK (No default selection) */}
                   {formData.propertyType === 'Residential' && (
                     <div className="sm:col-span-2">
                       <label className="block text-xs sm:text-sm font-semibold text-slate-700 mb-2">
@@ -422,8 +438,11 @@ export default function SellPropertyForm() {
                             <button
                               type="button"
                               key={item}
-                              onClick={() => setFormData(prev => ({ ...prev, bhk: item }))}
-                              className={`py-2.5 px-3 rounded-xl border-2 text-center text-xs sm:text-sm font-bold transition-all ${
+                              onClick={() => {
+                                setFormData(prev => ({ ...prev, bhk: item }))
+                                if (errors.bhk) setErrors(prev => ({ ...prev, bhk: '' }))
+                              }}
+                              className={`py-2.5 px-3 rounded-xl border-2 text-center text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                                 isSelected
                                   ? 'border-[#C59B27] bg-[#FDF8E8] text-[#8B6E16] shadow-xs'
                                   : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'
@@ -434,6 +453,12 @@ export default function SellPropertyForm() {
                           )
                         })}
                       </div>
+                      {errors.bhk && (
+                        <p className="mt-2 text-xs text-red-600 flex items-center gap-1">
+                          <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                          {errors.bhk}
+                        </p>
+                      )}
                     </div>
                   )}
 
@@ -450,7 +475,7 @@ export default function SellPropertyForm() {
                             type="button"
                             key={status}
                             onClick={() => setFormData(prev => ({ ...prev, propertyStatus: status }))}
-                            className={`p-3 rounded-xl border text-xs sm:text-sm font-semibold text-left transition-all ${
+                            className={`p-3 rounded-xl border text-xs sm:text-sm font-semibold text-left transition-all cursor-pointer ${
                               isSelected
                                 ? 'border-[#0A192F] bg-slate-100 text-[#0A192F] font-bold shadow-xs'
                                 : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
@@ -534,7 +559,7 @@ export default function SellPropertyForm() {
                       <button
                         type="button"
                         onClick={() => setFormData(prev => ({ ...prev, areaType: 'Carpet' }))}
-                        className={`rounded-xl border font-semibold text-sm transition-all ${
+                        className={`rounded-xl border font-semibold text-sm transition-all cursor-pointer ${
                           formData.areaType === 'Carpet'
                             ? 'border-[#0A192F] bg-slate-100 text-[#0A192F] font-bold'
                             : 'border-slate-200 bg-white text-slate-600'
@@ -546,7 +571,7 @@ export default function SellPropertyForm() {
                       <button
                         type="button"
                         onClick={() => setFormData(prev => ({ ...prev, areaType: 'Built-up' }))}
-                        className={`rounded-xl border font-semibold text-sm transition-all ${
+                        className={`rounded-xl border font-semibold text-sm transition-all cursor-pointer ${
                           formData.areaType === 'Built-up'
                             ? 'border-[#0A192F] bg-slate-100 text-[#0A192F] font-bold'
                             : 'border-slate-200 bg-white text-slate-600'
@@ -709,11 +734,11 @@ export default function SellPropertyForm() {
                     href={whatsAppUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="py-3.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-xs flex items-center justify-center gap-2 transition-colors"
+                    className="py-3.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-xs flex items-center justify-center gap-2 transition-colors cursor-pointer"
                     title="Send property details via WhatsApp"
                   >
-                    <MessageSquare className="w-4 h-4" />
-                    <span>Send via WhatsApp (+91 6284656983)</span>
+                    <WhatsAppIcon className="w-4 h-4 text-white" />
+                    <span>Send via WhatsApp ({COMPANY_INFO.phoneDisplay})</span>
                   </a>
                 </div>
 
